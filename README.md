@@ -65,7 +65,7 @@ $ gulp watch
 
 #### Sass compilation
 
-The SCSS files in app/styles will be compiled, built to CSS, and minified by the asset pipeline. From the entry-point (app.scss), you can import local SCSS files and CSS or SCSS files from npm packages:
+The SCSS files in app/styles will be compiled, built to CSS, and minified by the asset pipeline. From the entry-point (app.scss), you can `@import` local SCSS files and CSS or SCSS files from npm packages:
 
 ```
 // Importing from a local file (app/styles/components/_button.scss)
@@ -77,6 +77,16 @@ The SCSS files in app/styles will be compiled, built to CSS, and minified by the
 
 #### ES2015 and module bundling
 
+Craftsman will compile JavaScript in the app/scripts directory with Browserify, and transpile ES2015 syntax to ES5 using Babel (using [Airbnb's preset](https://github.com/airbnb/babel-preset-airbnb). From the entry point (app.js), you can `import` or `require` local JavaScript files or from npm packages:
+
+```
+// Importing from a local file (app/scripts/components/button.js)
+import button from './components/button';
+
+// Importing from a package
+import $ from 'jquery';
+```
+
 ##### ESLint
 
 ESLint is configured to run during `gulp watch`, and uses [Airbnb's style guide](https://github.com/airbnb/javascript).
@@ -85,7 +95,24 @@ ESLint is configured to run during `gulp watch`, and uses [Airbnb's style guide]
 
 ##### Example: Bootstrap
 
-##### Example: jQuery
+1. Install [bootstrap-sass](https://github.com/twbs/bootstrap-sass) and jQuery
+
+  ```shell
+  npm install --save bootstrap-sass jquery
+  ```
+
+2. Import Bootstrap styles in app.scss:
+
+  ```
+  @import 'bootstrap-sass';
+  ```
+
+3. Require jQuery and Bootstrap javascript in app.js:
+
+  ```
+  require('jquery');
+  require('bootstrap-sass');
+  ```
 
 ### Vagrant machine
 
