@@ -19,7 +19,7 @@ import sourcemaps from 'gulp-sourcemaps';
 import uglify from 'gulp-uglify';
 import useref from 'gulp-useref';
 
-gulp.task('watch', ['styles', 'scripts', 'images'], () => {
+gulp.task('watch', ['styles', 'scripts', 'images', 'extras'], () => {
   browserSync({
     proxy: 'http://craftsman.app',
     port: 8080,
@@ -29,9 +29,10 @@ gulp.task('watch', ['styles', 'scripts', 'images'], () => {
   gulp.watch('app/images/**/*', ['images']);
   gulp.watch('app/scripts/**/*', ['scripts']);
   gulp.watch('app/styles/**/*', ['styles']);
+  gulp.watch('app/*/*', ['extras']);
 });
 
-gulp.task('build', ['html', 'images'], () =>
+gulp.task('build', ['html', 'images', 'extras'], () =>
   gulp.src('public/**/*')
     .pipe(size({ title: 'build', gzip: true }))
 );
@@ -74,6 +75,12 @@ gulp.task('images', () =>
   gulp.src('app/images/**/*')
     .pipe(gulpif(gulpif.isFile, cache(imagemin())))
     .pipe(gulp.dest('public/images'))
+    .pipe(browserSync.reload({ stream: true }))
+);
+
+gulp.task('extras', () =>
+  gulp.src('app/*')
+    .pipe(gulp.dest('public'))
     .pipe(browserSync.reload({ stream: true }))
 );
 
